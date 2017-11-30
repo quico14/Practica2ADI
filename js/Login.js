@@ -47,7 +47,7 @@ class Login extends React.Component {
                                     pass: this.state.password
                                 })
         }).then(respuesta => {
-            if (respuesta.status == 401) {
+            if (respuesta.status == 401 || respuesta.status == 400) {
                 throw Error(respuesta.status);
             } else {
                 
