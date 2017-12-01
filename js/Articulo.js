@@ -68,10 +68,7 @@ class Articulo extends React.Component {
     createArticuloPage = () => {
         this.setState({
             crearArticulo: true,
-            showingArticles: false,
-            nombre: "",
-            cantidad: "",
-            precio: ""
+            showingArticles: false
         }) 
     }
 
@@ -239,9 +236,9 @@ class Articulo extends React.Component {
                     <div className="my-center" className="body-login">
                         <h1>Crea un nuevo artículo</h1>         
                         <form className="form">
-                            <input type="text" value={this.state.nombre} placeholder="Nombre" name="nombre" onChange={this.handleInputChange}/>
-                            <input type="number" value={this.state.cantidad} min="1" placeholder="Cantidad (mín. 1)" name="cantidad" onChange={this.handleInputChange}/>
-                            <input type="number" value={this.state.precio} min="0.01" placeholder="Precio (mín. 0.01)" name="precio" onChange={this.handleInputChange}/>
+                            <input type="text" value="" placeholder="Nombre" name="nombre" onChange={this.handleInputChange}/>
+                            <input type="number" value="" min="1" placeholder="Cantidad (mín. 1)" name="cantidad" onChange={this.handleInputChange}/>
+                            <input type="number" value="" min="0.01" placeholder="Precio (mín. 0.01)" name="precio" onChange={this.handleInputChange}/>
                             <button id="crear-articulo" type="button" onClick={this.handleCreate}>Crear artículo</button>
                             {this.state.formIncorrecto === true &&
                             <h1>Revisa tu formulario</h1>}
