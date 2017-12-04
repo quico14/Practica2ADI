@@ -12,17 +12,9 @@ class Articulo extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            showingArticles: true,
-            list : [],
-            hayArticulos: true,
-            crearArticulo: false,
             cantidad: 0,
             precio: 0,
-            nombre: "",
-            formIncorrecto: false,
-            modifyArticle: false,
-            showingInfo: false,
-            idModifyArticle: 0
+            nombre: ""
         };
         this.getMyArticles()
     }
@@ -46,46 +38,19 @@ class Articulo extends React.Component {
             return respuesta.json();
         }).then(resultado => {
            if (resultado.message) {
-            this.setState({
-                showingArticles: true,
-                hayArticulos: false
-            })
+            this.props.handleMostrarSinArticulos()
            } else {
-                this.setState({
-                    showingArticles: true,
-                    hayArticulos: true,
-                    list: []
-                })
-                resultado.map(articulo => 
-                    this.setState({
-                        list: this.state.list.concat([articulo])
-                    })   
-                )
+                this.props.handleMostrarConArticulos(resultado)
             }
         })   
     }
 
     createArticuloPage = () => {
-        this.setState({
-            crearArticulo: true,
-            showingArticles: false,
-            nombre: "",
-            cantidad: 0,
-            precio: 0
-        }) 
+        this.props.handlePaginaCreaArticulo()
     }
 
     modifyArticlePage = (item) => {
-        this.setState({
-            crearArticulo: false,
-            showingArticles: false,
-            modifyArticle: true,
-            nombre: item.nombre,
-            cantidad: item.cantidad,
-            precio: item.precio,
-            idModifyArticle: item.ID,
-            showingInfo: false
-        }) 
+        this.props.handlePaginaModificaArticulos(item.nombre, item.cantidad, item.precio, item.ID)
     }
 
     deleteArticle = item => {
@@ -96,16 +61,12 @@ class Articulo extends React.Component {
                 'token' : localStorage.getItem('token')
             }
         }).then(respuesta => {
-            var array = this.state.list;
+            var array = this.props.list;
             var index = array.indexOf(item)
             array.splice(index, 1);
-            this.setState({
-                list: array
-            })
+            this.props.handleBorraArticulo(array)
             if (array.length == 0) {
-                this.setState({
-                    hayArticulos: false
-                })
+                this.props.handleMostrarSinArticulos()
             }
        })
     }
@@ -119,22 +80,13 @@ class Articulo extends React.Component {
         }).then(respuesta => {
             return respuesta.json()
         }).then(resultado => {
-            this.setState({
-                showingInfo: true,
-                showingArticles: false,
-                crearArticulo: false,
-                nombre: resultado.nombre,
-                cantidad: resultado.precio,
-                precio: resultado.cantidad
-            }) 
+            this.props.handlePaginaMuestraArticulo(item.nombre, item.cantidad, item.precio)
         })
     }
 
     handleCreate = (event) => {
         if (this.state.cantidad < 1 || this.state.precio < 0.01 || !this.state.nombre) {
-            this.setState({
-                formIncorrecto: true
-            })
+            this.props.handleFormCrearIncorrecto()
         } else {
             fetch("http://localhost:3000/usuarios/" + localStorage.getItem('user') + "/articulos", {
                 method: 'POST',
@@ -154,9 +106,7 @@ class Articulo extends React.Component {
 
     handleModify = id => {
         if (this.state.cantidad < 1 || this.state.precio < 0.01 || !this.state.nombre) {
-            this.setState({
-                formIncorrecto: true
-            })
+            this.props.handleFormModificarIncorrecto()
         } else {
             fetch("http://localhost:3000/usuarios/" + localStorage.getItem('user') + "/articulos/" + id, {
                 method: 'PUT',
@@ -175,11 +125,11 @@ class Articulo extends React.Component {
     }
 
     render() {
-        if (this.state.showingArticles && this.state.hayArticulos) {
+        if (this.props.showingArticles && this.props.hayArticulos) {
             return (
                 <div className="body-cards">
                     <ul className="surveys grid">
-                        {this.state.list.map(item => { 
+                        {this.props.list.map(item => { 
                             return (
                                 <li className="survey-item" key={item.ID}>
                                     <span className="survey-name">
@@ -225,7 +175,7 @@ class Articulo extends React.Component {
                     </ul>  
                 </div>
             )
-        } else if(!this.state.hayArticulos && this.state.showingArticles) {
+        } else if(!this.props.hayArticulos && this.props.showingArticles) {
             return (
                 <div className="container-login">
                     <div className="my-center" className="body-login">
@@ -233,15 +183,15 @@ class Articulo extends React.Component {
                     </div>
                 </div>
             )     
-        } else if(this.state.crearArticulo) {
+        } else if(this.props.crearArticulo) {
             return (
                 <div className="container-login">
                     <div className="my-center" className="body-login">
                         <h1>Crea un nuevo artículo</h1>         
                         <form className="form">
-                            <input type="text" defaultValue="" placeholder="Nombre" name="nombre" onChange={this.handleInputChange}/>
-                            <input type="number" defaultValue="" min="1" placeholder="Cantidad (mín. 1)" name="cantidad" onChange={this.handleInputChange}/>
-                            <input type="number" defaultValue="" min="0.01" placeholder="Precio (mín. 0.01)" name="precio" onChange={this.handleInputChange}/>
+                            <input type="text" value={this.state.nombre} placeholder="Nombre" name="nombre" onChange={this.handleInputChange}/>
+                            <input type="number" value={this.state.cantidad} min="1" placeholder="Cantidad (mín. 1)" name="cantidad" onChange={this.handleInputChange}/>
+                            <input type="number" value={this.state.precio} min="0.01" placeholder="Precio (mín. 0.01)" name="precio" onChange={this.handleInputChange}/>
                             <button id="crear-articulo" type="button" onClick={this.handleCreate}>Crear artículo</button>
                             {this.state.formIncorrecto === true &&
                             <h1>Revisa tu formulario</h1>}
@@ -249,14 +199,14 @@ class Articulo extends React.Component {
                     </div>
                 </div>
             )
-        } else if(this.state.showingInfo) {
+        } else if(this.props.showingInfo) {
             return (
                 <div className="container-info">
                     <div className="my-center" className="body-login">       
                         <form className="form">
-                            <h1>Nombre: {this.state.nombre}</h1>
-                            <h1>Cantidad: {this.state.cantidad} uds.</h1>
-                            <h1>Precio: {this.state.precio}€</h1>
+                            <h1>Nombre: {this.props.nombre}</h1>
+                            <h1>Cantidad: {this.props.cantidad} uds.</h1>
+                            <h1>Precio: {this.props.precio}€</h1>
                         </form>
                     </div>
                 </div>
@@ -267,11 +217,11 @@ class Articulo extends React.Component {
                     <div className="my-center" className="body-login">
                         <h1>Modifica un artículo</h1>         
                         <form className="form">
-                            <input type="text" defaultValue={this.state.nombre} placeholder="Nombre" name="nombre" onChange={this.handleInputChange}/>
-                            <input type="number" min="1" defaultValue={this.state.cantidad} placeholder="Cantidad (mín. 1)" name="cantidad" onChange={this.handleInputChange}/>
-                            <input type="number" min="0.01" defaultValue={this.state.precio} placeholder="Precio (mín. 0.01)" name="precio" onChange={this.handleInputChange}/>
-                            <button id="crear-articulo" type="button" onClick={() => {this.handleModify(this.state.idModifyArticle)}}>Modificar artículo</button>
-                            {this.state.formIncorrecto === true &&
+                            <input type="text" defaultValue={this.props.nombre} placeholder="Nombre" name="nombre" onChange={this.handleInputChange}/>
+                            <input type="number" min="1" defaultValue={this.props.cantidad} placeholder="Cantidad (mín. 1)" name="cantidad" onChange={this.handleInputChange}/>
+                            <input type="number" min="0.01" defaultValue={this.props.precio} placeholder="Precio (mín. 0.01)" name="precio" onChange={this.handleInputChange}/>
+                            <button id="crear-articulo" type="button" onClick={() => {this.handleModify(this.props.idModifyArticle)}}>Modificar artículo</button>
+                            {this.props.formIncorrecto === true &&
                             <h1>Revisa tu formulario</h1>}
                         </form>
                     </div>

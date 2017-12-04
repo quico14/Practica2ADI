@@ -1,19 +1,12 @@
 import React from 'react'
 import Articulo from './Articulo'
-import {Button} from 'react-bootstrap'
-import {Alert} from 'react-bootstrap'
-import {Form} from 'react-bootstrap'
-import {FormGroup} from 'react-bootstrap'
-import {Col} from 'react-bootstrap'
-import {FormControl} from 'react-bootstrap'
-import {ControlLabel} from 'react-bootstrap'
-import {Checkbox} from 'react-bootstrap'
 import {Navbar} from 'react-bootstrap'
 import {Nav} from 'react-bootstrap'
 import {NavItem} from 'react-bootstrap'
 import {NavDropdown} from 'react-bootstrap'
 import {MenuItem} from 'react-bootstrap'
 import styles from '../styles/styles.css'
+import ArticuloContainer from './ArticuloContainer'
 
 
 class Login extends React.Component {
@@ -21,10 +14,7 @@ class Login extends React.Component {
         super(props);
         this.state = {
             username: '',
-            password: '',
-            logged: localStorage.getItem('token') !== null,
-            existUser: true,
-            showingArticles: false
+            password: ''
         };
     }
 
@@ -47,7 +37,7 @@ class Login extends React.Component {
                                     pass: this.state.password
                                 })
         }).then(respuesta => {
-            if (respuesta.status == 401) {
+            if (respuesta.status == 401 || respuesta.status == 400) {
                 throw Error(respuesta.status);
             } else {
                 
@@ -56,26 +46,19 @@ class Login extends React.Component {
         }).then(resultado => {
                 localStorage.setItem('user',this.state.username)
                 localStorage.setItem('token',resultado.token)
-                this.setState({
-                    logged: true
-                })
+                this.props.handleLogIn()
         }).catch(error => {
-            console.log(error)
-            this.setState({
-                existUser: false
-            })
+            this.props.handleUserNotExist()
         });
     }
 
     logout = () => {
         localStorage.clear()
-        this.setState({
-            logged: false
-        })       
+        this.props.handleLogOut()
     }
 
     render() {
-        if (!this.state.logged) {
+        if (!this.props.logged) {
             return(
                 <div className="wrapper">
                     <div className="container-login">
@@ -87,7 +70,7 @@ class Login extends React.Component {
                                 <input type="password" placeholder="Password" name="password" onChange={this.handleInputChange}/>
                                 <button id="login-button" type="button" onClick={this.handleSubmit}>Login</button>
                             </form>
-                            {this.state.existUser === false &&
+                            {this.props.existUser === false &&
                             <h1>Ese usuario no existe</h1>}
                         </div>
                     </div>
@@ -117,8 +100,8 @@ class Login extends React.Component {
                             </Navbar.Brand>
                             </Navbar.Header>
                             <Nav>
-                            <NavItem onClick={() => this.refs.Articulo.getMyArticles()}>Mis artículos</NavItem>
-                            <NavItem onClick={() => this.refs.Articulo.createArticuloPage()}>Crear artículo</NavItem>
+                            <NavItem onClick={() => this.refs.ArticuloContainer.refs.Articulo.getMyArticles()}>Mis artículos</NavItem>
+                            <NavItem onClick={() => this.refs.ArticuloContainer.refs.Articulo.createArticuloPage()}>Crear artículo</NavItem>
                             </Nav>
                             <Nav pullRight>
                             <NavDropdown title={localStorage.getItem('user')} id="basic-nav-dropdown">
@@ -126,8 +109,7 @@ class Login extends React.Component {
                             </NavDropdown>
                             </Nav>
                         </Navbar>
-                        <Articulo ref="Articulo"/>
-                        
+                        <ArticuloContainer ref="ArticuloContainer" store={this.props.store}/>
                     </div> 
                 </div>
             )
