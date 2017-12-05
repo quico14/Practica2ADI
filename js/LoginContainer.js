@@ -25,7 +25,7 @@ class LoginContainer extends React.Component {
             //En este ejemplo nos interesa el estado completo del store
             //pero normalmente sería solo una parte
             this.setState({ logged: this.props.store.getState().logged,
-                            existUser: this.props.store.getState().logged           
+                            existUser: this.props.store.getState().existUser           
             })
         })
     }
