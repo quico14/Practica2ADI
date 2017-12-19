@@ -63,7 +63,7 @@ class Login extends React.Component {
                 <div className="wrapper">
                     <div className="container-login">
                         <div className="my-center" className="body-login">
-                            <h1>Bienvenido a UABay</h1>
+                            <h1 id="welcome">Bienvenido a UABay</h1>
                             
                             <form className="form">
                                 <input type="text" placeholder="Username" name="username" onChange={this.handleInputChange}/>
@@ -71,7 +71,7 @@ class Login extends React.Component {
                                 <button id="login-button" type="button" onClick={this.handleSubmit}>Login</button>
                             </form>
                             {this.props.existUser === false &&
-                            <h1>Ese usuario no existe</h1>}
+                            <h1 id="userNotExist">Ese usuario no existe</h1>}
                         </div>
                     </div>
                 </div>

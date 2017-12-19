@@ -46,10 +46,20 @@ class Articulo extends React.Component {
     }
 
     createArticuloPage = () => {
+        this.setState({
+            nombre: "",
+            cantidad: "",
+            precio: ""
+          });
         this.props.handlePaginaCreaArticulo()
     }
 
     modifyArticlePage = (item) => {
+        this.setState({
+            nombre: item.nombre,
+            cantidad: item.cantidad,
+            precio: item.precio
+          });
         this.props.handlePaginaModificaArticulos(item.nombre, item.cantidad, item.precio, item.ID)
     }
 
@@ -193,7 +203,7 @@ class Articulo extends React.Component {
                             <input type="number" value={this.state.cantidad} min="1" placeholder="Cantidad (mín. 1)" name="cantidad" onChange={this.handleInputChange}/>
                             <input type="number" value={this.state.precio} min="0.01" placeholder="Precio (mín. 0.01)" name="precio" onChange={this.handleInputChange}/>
                             <button id="crear-articulo" type="button" onClick={this.handleCreate}>Crear artículo</button>
-                            {this.state.formIncorrecto === true &&
+                            {this.props.formIncorrecto === true &&
                             <h1>Revisa tu formulario</h1>}
                         </form>
                     </div>
@@ -217,9 +227,9 @@ class Articulo extends React.Component {
                     <div className="my-center" className="body-login">
                         <h1>Modifica un artículo</h1>         
                         <form className="form">
-                            <input type="text" defaultValue={this.props.nombre} placeholder="Nombre" name="nombre" onChange={this.handleInputChange}/>
-                            <input type="number" min="1" defaultValue={this.props.cantidad} placeholder="Cantidad (mín. 1)" name="cantidad" onChange={this.handleInputChange}/>
-                            <input type="number" min="0.01" defaultValue={this.props.precio} placeholder="Precio (mín. 0.01)" name="precio" onChange={this.handleInputChange}/>
+                            <input type="text" value={this.state.nombre} placeholder="Nombre" name="nombre" onChange={this.handleInputChange}/>
+                            <input type="number" min="1" value={this.state.cantidad} placeholder="Cantidad (mín. 1)" name="cantidad" onChange={this.handleInputChange}/>
+                            <input type="number" min="0.01" value={this.state.precio} placeholder="Precio (mín. 0.01)" name="precio" onChange={this.handleInputChange}/>
                             <button id="crear-articulo" type="button" onClick={() => {this.handleModify(this.props.idModifyArticle)}}>Modificar artículo</button>
                             {this.props.formIncorrecto === true &&
                             <h1>Revisa tu formulario</h1>}

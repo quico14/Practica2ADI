@@ -91,8 +91,8 @@ class ArticuloContainer extends React.Component {
                             handlePaginaModificaArticulos = {this.handlePaginaModificaArticulos}
                             handlePaginaMuestraArticulo = {this.handlePaginaMuestraArticulo}
                             handleBorraArticulo = {this.handleBorraArticulo}
-                            handleFormCrearIncorrecto = {this.state.handleFormCrearIncorrecto}
-                            handleFormModificarIncorrecto = {this.state.handleFormModificarIncorrecto}
+                            handleFormCrearIncorrecto = {this.handleFormCrearIncorrecto}
+                            handleFormModificarIncorrecto = {this.handleFormModificarIncorrecto}
                             list = {this.state.list}
                             showingArticles = {this.state.showingArticles}
                             hayArticulos = {this.state.hayArticulos}

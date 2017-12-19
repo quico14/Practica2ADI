@@ -43,7 +43,11 @@ export default function reducer(estado = initialState, accion) {
         })
         case PAGINA_CREA_ARTICULO: return Object.assign({}, estado, {
             crearArticulo: true,
-            showingArticles: false
+            showingArticles: false,
+            formIncorrecto: false,
+            nombre: "",
+            cantidad: "",
+            precio: ""
         })
         case PAGINA_MODIFICA_ARTICULO: return Object.assign({}, estado, {
             crearArticulo: false,

@@ -37,7 +37,11 @@
     font-weight: 300;
   }
   .wrapper {
-    background: #41837e;
+    background: #50a3a2     ;
+    background: -webkit-linear-gradient(top left, #50a3a2      0%, #53e3a6      100%);
+    background: linear-gradient(to bottom right, #50a3a2      0%, #53e3a6      100%);
+    width: 100%;
+    min-height: 100%;
     /*background: -webkit-linear-gradient(top left, #50a3a2 0%, #53e3a6 100%);
     background: linear-gradient(to bottom right, #50a3a2 0%, #53e3a6 100%);
     position: absolute;
