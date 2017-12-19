@@ -12,3 +12,7 @@ Venimos de la [práctica 1](https://github.com/quico14/Practica1ADI), primero in
 ### Correr tests react
 Ejecutar `npm test`
 
+### Requisitos adicionales
+* Estilo visual de la web con `CSS` y `Bootstrap`.
+* Implementación de `Redux`.
+* Tests con `Jest`.
