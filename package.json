@@ -43,7 +43,7 @@
   },
   "jest": {
     "moduleNameMapper": {
-      "\\.(css|sass)$": "/home/adi1718/Escritorio/Práctica 2/__mocks__/styleMock.js"
+      "\\.(css|sass)$": "../__mocks__/styleMock.js"
     }
   }
 }
