@@ -1,4 +1,4 @@
-# Practica1ADI
+# Practica2ADI
 
 Realizada por Quico Llinares Llorens.
 
@@ -33,13 +33,13 @@ Con los seeders tendremos lo siguiente en la base de datos:
 |username_prueba2| username_prueba |
 
 
-### Correr en local
+### Correr server node en local
 - Descargar repositorio.
 - Ejecutar `npm install`.
 - Ejecutar `node app.js`
 - Acceder desde el navegador a `localhost:3000`
 
-### Correr tests
+### Correr tests node
 Ejecutar desde la terminal en la raíz del proyecto `./node_modules/.bin/mocha`
 Al inicio de los tests se corre el seeder.
 
@@ -47,3 +47,10 @@ Todos los endpoints están definidos en la `documentación` del API, la cual se 
 
 ### Documentación
 La documentación de los casos de uso, relaciones entre tablas, y casos de uso que se satisfacen se puede encontrar en el archivo `Diseño API.pdf`
+
+###Lanzar servidor web
+./node_modules/.bin/webpack-dev-server
+
+### Correr tests react
+npm test
+
