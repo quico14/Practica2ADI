@@ -1,18 +1,19 @@
 # Practica2ADI
 
-Realizada por Quico Llinares Llorens.
+Done by Quico Llinares Llorens.
 
-### Práctica 1
-Venimos de la [práctica 1](https://github.com/quico14/Practica1ADI), primero iniciar esta y seguidamente la práctica 2.
-### Lanzar servidor web
-* Ejecutar `npm install`
-* Ejecutar `./node_modules/.bin/webpack-dev-server`
-* Acceder a `localhost:8080`
+### Assignment 1
+We come from [Assignment 1](https://github.com/quico14/Practica1ADI). First it is needed to start Assignment 1 project, and then this one.
 
-### Correr tests react
-Ejecutar `npm test`
+### Run web server
+* Execute `npm install`
+* Execute `./node_modules/.bin/webpack-dev-server`
+* Access to `localhost:8080`
 
-### Requisitos adicionales
-* Estilo visual de la web con `CSS` y `Bootstrap`.
-* Implementación de `Redux`.
-* Tests con `Jest`.
+### Run react tests
+Run `npm test`
+
+### Additional requirements
+* Visual web styles with `CSS` and `Bootstrap`.
+* `Redux` implementation.
+* Tests with `Jest`.
